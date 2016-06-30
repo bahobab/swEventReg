@@ -30,20 +30,20 @@ B/ Usage:
 1) Gulp Tasks for Dev - Apply to folder app:
 --------------------------------------------
 run this task to start the browserSync server
--> gulp default
+> gulp default
 
 It will also watches for changes in:
-	. index.html, and reloads
-	. scripts files, and concatenate and minify
-	. styles files, and concatenate and minify
+	./ index.html, and reloads
+	./ scripts files, and concatenate and minify
+	./ styles files, and concatenate and minify
 
 run this task to concatenate css and js files manually
--> gulp dev
+> gulp dev
 
 2) Gulp Tasks for build - apply to folder dist:
 -----------------------------------------------
 Once dev is complete, run this task to deploy app in the dist folder
-- >gulp dist
+>gulp dist
 
 3) Live demo
 ------------
