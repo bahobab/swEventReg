@@ -32,10 +32,10 @@ B/ Usage:
 run this task to start the browserSync server
 > gulp default
 
-It will also watches for changes in:
-	- index.html, and reloads
-	- scripts files, and concatenate and minify
-	- styles files, and concatenate and minify
+It will also watch for changes in:
+- index.html, and reloads
+- scripts files, and concatenate and minify
+- styles files, and concatenate and minify
 
 run this task to concatenate css and js files manually
 > gulp dev
