@@ -1,0 +1,149 @@
+
+<ul class="nav navbar-nav">
+    <li ><a ng-if="isLoggedIn" ng-click="topMenuSelect('edit')" ng-class="{topMenuSelected: editMenuIsSelected && isLoggedIn}" id="createEventMenuLink" class="menuItem" href="#/event">Create - Edit Event</a></li>
+    <li><a ng-if="isLoggedIn" ng-click="topMenuSelect('all')" ng-class="{topMenuSelected: allMenuIsSelected && isLoggedIn}" class="menuItem" href="#/allevents">My Events</a></li>
+    <li><a ng-click="topMenuSelect('contact')" ng-class="{topMenuSelected: contactMenuIsSelected}" class="menuItem" href="#/contact">Contact Us</a></li>
+</ul>
+<!--                    <p>Logged in??</p>-->
+<button ng-if="!isLoggedIn" ng-click="signinWindow()" id="signinButton" type="button" class="btn btn-primary account-button accountMenu" data-toggle="modal" data-target="#sign-in-modal" aria-describedby="ariaSignInButton" autofocus="true">Sign In</button>
+<p id="ariaSignInButton" class="sr-only">Press tab for the register button</p>
+
+<button ng-if=" !isLoggedIn" ng-click="registerWindow()" id="registerButton" type="button" class="btn btn-primary account-button accountMenu" data-toggle="modal" data-target="#register-modal" aria-describedby="ariaRegisterButton">Register</button>
+<p id="ariaRegisterButton" class="sr-only">Press SHIFT + tab for the login button</p>
+<p id="signInFailure" class="accountMenu" ng-show="signInFailure">Sign in failed: Wrong Email Address Or Password</p>
+<p id="registrationFailure" class="accountMenu" ng-show="registerError">Registration failed: Email address was rejected!</p>
+<p id="registrationSuccess" class="accountMenu eventSuccess" ng-show="isRegistered && !isLoggedIn">Registration Successful!</p>
+
+<div class="accountMenu logoutLink" ng-if="isLoggedIn"><a href="#/home" ng-click="logOut() ">Logout {{ user.email }}</a></div>
+
+    <!--<h2>This the sign in page</h2>-->
+<div class="modal fade" id="sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Signing In</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+                <div class="jumbotron" style="height: 70%;">
+                    <h4 class="eventSuccess">Sign In To Create Your Event</h4>
+
+                    <form class="form-signin" role="form" name="singInForm">
+
+                        <div class="form-group" ng-class="{ 'has-error' : singInForm.email.$invalid }">
+                            <label class="col-md-2" for="email">Email</label>
+                            <div class="col-md-10">
+                                <input type="email" id="signinemail" name="email" autocomplete="email" ng-model="user.email" class="form-control" placeholder="Enter Email address" required="" aria-describedby="validEmailMessage">
+                                <p class="validAccountMessage" aria-hidden="!singInForm.email.$invalid || !singInForm.email.$dirty" ng-show="singInForm.email.$invalid && singInForm.email.$dirty">Invalid Entry: Enter a valid email address</p>
+                                <p id="validEmailMessage" class="sr-only">Require a valid email address</p>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : singInForm.password.$invalid }">
+                            <label class="col-md-2" for="password">Password</label>
+                            <div class="col-md-10">
+                                <input type="password" id="password" class="form-control" name="password" ng-model="user.password" placeholder="Enter Password" required="" strong-password autocomplete="off" aria-describedby="validPasswordMessage">
+                                <p id="validPasswordMessage" class="sr-only" >Enter a Valid Password</p>
+            <!--                    <dir ng-messages="singInForm.password.$error">-->
+            <!--                    </dir>-->
+<!--                                <p style="color: red" ng-show="regError">{{ regErrorMessage }}</p>-->
+                            </div>
+                        </div>
+
+<!--                            <hr>-->
+                            <div class="form-group">
+                                <div class="col-md-10 col-md-offset-2">
+                                    <p class="validPasswordMessage has-error">
+                                        <span id="validPasswordMessage" class="validAccountMessage" ng-show="singInForm.password.$error.lowercaseValidator">at least 1 lowercase character<br /></span>
+                                        <span id="validPasswordMessage" class="validAccountMessage" ng-show="singInForm.password.$error.uppercaseValidator">at least 1 uppercase character<br /></span>
+                                        <span id="validPasswordMessage" class="validAccountMessage" ng-show="singInForm.password.$error.numberValidator">at least 1 number character<br /></span>
+                                        <span id="validPasswordMessage" class="validAccountMessage" ng-show="singInForm.password.$error.specialCharValidator">at least 1 special character<br /></span>
+                                        <span id="validPasswordMessage" class="validAccountMessage" ng-show="singInForm.password.$error.lengthValidator">at least 8 characters<br /></span>
+                                    </p>
+                                    <button type="button" ng-disabled="!singInForm.email.$valid || !singInForm.password.$valid" class="btn btn-lg btn-primary" ng-click="signIn($event)" data-dismiss="modal" aria-describedby="signInButton">Sign In</button>
+                                    <p id="signInButton" class="sr-only">Register Button</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--    this is the register page-->
+
+<div class="modal fade" id="register-modal" tabindex="0" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Register</h4>
+          </div>
+          <div class="modal-body">
+                <div class="row">
+                    <div class="jumbotron" style="height: 70%;">
+                        <h4 class="eventSuccess">Register Then Sign In To Create Your Event</h4>
+
+                        <form class="form-signin" role="form" name="regForm" novalidate>
+
+                            <div class="form-group" ng-class="{ 'has-error' : regForm.name.$invalid }">
+                                <label class="col-md-2" for="name">Name</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="registername" name="name" ng-model="user.name" class="form-control" placeholder="Enter User Name" required autocomplete="off" ng-minlength="4" aria-describedby="validRegNameMessage">
+                                    <p class="validAccountMessage" ng-show="regForm.name.$error.minlength">Invalid Entery: Enter a valid name with minimun 4 characters</p>
+                                    <p id="validRegNameMessage" class="sr-only" >Enter a valid name: minimun 4 characters</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-class="{ 'has-error' : regForm.email.$invalid }">
+                                <label class="col-md-2" for="email">Email</label>
+                                <div class="col-md-10">
+                                    <input type="email" id="email" name="email" ng-model="user.email" class="form-control" placeholder="Enter Email address" autocomplete="off" required aria-describedby="validEmailMessage">
+                                    <p class="validAccountMessage" ng-show=" regForm.email.$invalid && regForm.email.$dirty">Invalid Entry: Enter a valid email address</p>
+                                    <p id="validEmailMessage" class="sr-only" >Enter a valid email address</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-class="{ 'has-error' : regForm.password.$invalid }">
+                                <label class="col-md-2" for="password">Password</label>
+                                <div class="col-md-10">
+                                    <input type="password" id="password" class="form-control" name="password" ng-model="user.password" placeholder="Enter Password" required autocomplete="off" ng-minlength="3" strong-password aria-describedby="validPasswordMessage"><br />
+                                    <p class="validPasswordMessage has-error" ng-hide="regForm.password.$valid">
+                                        <span id="validRegPasswordMessage" class="validAccountMessage" ng-show="regForm.password.$error.lowercaseValidator">at least 1 lowercase character<br /></span>
+                                        <span id="validRegPasswordMessage" class="validAccountMessage" ng-show="regForm.password.$error.uppercaseValidator">at least 1 uppercase character<br /></span>
+                                        <span id="validRegPasswordMessage" class="validAccountMessage" ng-show="regForm.password.$error.numberValidator">at least 1 number character<br /></span>
+                                        <span id="validRegPasswordMessage" class="validAccountMessage" ng-show="regForm.password.$error.specialCharValidator">at least 1 special character<br /></span>
+                                        <span id="validRegPasswordMessage" class="validAccountMessage" ng-show="regForm.password.$error.lengthValidator">at least 8 characters<br /></span>
+                                     </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <label class="col-md-2" for="email">Job Title</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="title" name="title" ng-model="user.title" class="form-control" placeholder="Enter Job Title" autocomplete="on" required aria-describedby="validtitleMessage">
+                                    <!--<p class="validAccountMessage" ng-show=" regForm.email.$invalid && regForm.email.$dirty">Invalid Entry: Enter a valid email address</p>-->
+                                    <p id="validTitleMessage" class="sr-only" >Enter Your Job Title (optional)</p>
+                                </div>
+                            </div>
+<!--                            <hr>-->
+                            <div class="col-md-10 col-md-offset-2 form-group">
+                                <button type="button" ng-disabled="!regForm.password.$valid || !regForm.email.$valid || !regForm.name.$valid" class="btn btn-lg btn-primary" ng-click="registerUser($event)" data-dismiss="modal" aria-describedby="registerButton">Register</button>
+                                <p id="registerButton" class="sr-only">Register Button</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--</div>-->
+<script>
+	$(document).ready(function () {
+		document.getElementById('signinButton').focus ();
+	});
+</script>

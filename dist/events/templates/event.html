@@ -1,0 +1,31 @@
+<!--<div class="container-fluid">-->
+
+    <div class="row">
+        <div class="top-line"></div>
+        <div class="col-md-4 summary-col" ng-class="{eventList:isLoggedIn}" aria-hidden="true">
+<!--            <event-summary ng-if="isLoggedIn"></event-summary>-->
+            <div ng-if="isLoggedIn">
+                <p class="text-warning" ng-if="eventListIsEmpty()">You have no events... Why don't you add one to start with?!</p>
+                <p class="text-success" ng-if="!eventListIsEmpty()">{{ numberOfEvents() }} Events Summary
+                    <a ng-click="setMenuActive('all')" class="show-all-details" href="#/allevents">See All Events Details</a>
+                </p>
+                <p ng-if="!eventListIsEmpty()">Click Each Event to Edit or Delete</p>
+                <ul class="eventSummary">
+                    <li  ng-repeat="event in events" ng-click="selectEvent(event)" ng-class="{ summaryEventSelected: eventSelectedId == event.$id && validateSelection }">
+                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                        {{ event.eventStartDate }} - {{ event.eventStartTime | date: 'shortTime'}} - {{ event.eventName }} {{ event.eventType }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-8 details-col" >
+<!--            <div class="well">-->
+                <event-details></event-details>
+<!--            </div>-->
+        </div>
+    </div>
+<!--</div>-->
+
+<!--For Google Geolocation autocomplete-->
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI1qaVQGGosTf7MBy245eXYqVjQJFYeSo&libraries=places&callback=initAutocomplete" async defer></script>-->

@@ -1,0 +1,305 @@
+<div class="row">
+		<hr class="newformLine">
+	<div ng-show="!readOnly && !isEditing" class="createNewEvent">CREATING NEW EVENT ... </div>
+	<div ng-show="readOnly && !isEditing" class="createNewEvent">{{ event.eventName }} {{ event.eventType }} Details <span id="eventCreateSuccess" class="eventSuccess" ng-if="eventCreatedSuccess"> - Created Successfully</span><span id="eventEditSuccess" class="eventSuccess" ng-if="eventEditedSuccess"> - Edited Successfully</span></div>
+	<div ng-show=" isEditing" class="createNewEvent">Editing {{ event.eventName }} {{ event.eventType }}...</div>
+
+	<form ng-show="!isEditing" class="form-horizontal" novalidate role="form" name="eventForm" id="eventForm">
+		<div class="form-group">
+			<label class="col-md-2" for="eventName">Event Name</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: eventForm.eventName.$valid}" ng-class="{invalidField: !eventForm.eventName.$valid}" class="form-control" type="text" id="eventName" name="eventName" ng-model="event.eventName" placeholder="Enter Event Name" ng-readonly="readOnly" ng-required="true" minlength="3" maxlength="50" autofocus="true" autocomplete="name" aria-describedby="requiredNameMessage">
+
+				<p ng-show="!eventForm.eventName.$valid && eventForm.eventName.$dirty" class="invalidField">Invalid Entries: Field requires at Least 3 Characters</p>
+				<p id="requiredNameMessage" class="sr-only">This is the event name field. It requires a minimum of 3 characters and a maximum of 50 characters</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="typeOfEvent">Event Type</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: eventForm.eventType.$valid}" ng-class="{invalidField: !eventForm.eventType.$valid}" ng-model="event.eventType" list="eventType" id="typeOfEvent" name="eventType" placeholder="Type or Select event type" class="form-control" ng-required="true" ng-readonly="readOnly" type="text" minlength="3" maxlength="50" aria-describedby="requiredTypeMessage"/>
+				<datalist id="eventType">
+					<option value="Meeting">
+					<option value="Conference">
+					<option value="Photo Shoot">
+					<option value="Webinar">
+					<option value="Modeling">
+					<option value="Party">
+					<option value="Picnic">
+					<option value="Fashion Show">
+					<option value="Sport Event">
+				</datalist>
+
+				<p ng-show="!eventForm.eventType.$valid && eventForm.eventType.$dirty" class="invalidField">Invalid Entries: Field requires at Least 3 Characters</p>
+				<p id="requiredTypeMessage" class="sr-only">This is the event type field. It requires a minimum of 3 characters and a maximum of 50 characters</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="eventHost">Event Host</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: eventForm.eventHost.$valid}" ng-class="{invalidField: !eventForm.eventHost.$valid}" class="form-control" type="text" id="eventHost" name="eventHost" ng-model="event.eventHost"  placeholder="Enter Event Host" ng-disabled="readOnly" ng-required="true" minlength="5" maxlength="150" aria-describedby="requiredHostMessage">
+
+				<p ng-show="!eventForm.eventHost.$valid && eventForm.eventHost.$dirty" class="invalidField">Invalid Entries: Field requires at Leat 5 Characters</p>
+				<p id="requiredHostMessage" class="sr-only">This is the event host field. It requires a minimum of 5 characters and a maximum of 150 characters</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="eventStartDate">Start Date</label>
+			<div class="col-md-4" >
+				<datepicker date-format="M/d/yyyy" selector="form-control" >
+					<input ng-class="{'has-error': !dateIsValid(event.eventStartDate)}" id="eventStartDate" size="16" class="date start form-control" type="text" ng-model="event.eventStartDate" placeholder="Enter Or Select Start Date" aria-describedby="requiredStartDateMessage" ng-disabled="readOnly" ng-required="true" autocomplete="off" required />
+					<!--{{ event.eventStartDate }} - {{ dateIsValid(event.eventStartDate) }}-->
+				</datepicker>
+
+				<p ng-show="!dateIsValid(event.eventStartDate) " class="invalidField">A valid date required in the format d/m/yyyy</p>
+				<p id="requiredStartDateMessage" class="sr-only">This field requires a valid date. The format is d/m/yyyy. Press Tab to move to next field</p>
+			</div>
+
+			<label class="col-md-2" for="eventStartTime">Start Time</label>
+			<div class="col-md-4" >
+				<input ng-class="{'has-error': !timeIsValid(event.eventStartTime)}" ui-timepicker ui-timepicker="timePickerOptions" id="eventStartTime" size="16" class="form-control" type="text" ng-model="event.eventStartTime" placeholder="Enter Or Select Start Time" aria-describedby="requiredStartTimeMessage" autocomplete="off" ng-readonly="readOnly" ng-required="true" required />
+				<!--{{ event.eventStartTime }} - {{ timeIsValid(event.eventStartTime) }}-->
+
+				<p ng-show="!timeIsValid(event.eventStartTime) " class="invalidField">A valid time required in the format h:m AM or PM</p>
+				<p id="requiredStartTimeMessage" class="sr-only">This field requires a valid time. The format is hours column minute followed by AM or PM. Press Tab to move to next field</p>
+			</div>
+		</div>
+<!--        <p ng-show="!dateRangeIsValid()" class="has-error">Date Range is Invalid: End Date must occur after Start Date</p>-->
+
+		<div class="form-group">
+			<label class="col-md-2" for="eventEndDate">End Date</label>
+			<div class="col-md-4">
+				<datepicker date-format="M/d/yyyy" selector="form-control">
+<!--					<div class="input-group">-->
+						<input ng-class="{'has-error': !dateIsValid(event.eventEndDate)}" id="eventEndDate" size="16" class="date end form-control" type="text" ng-model="event.eventEndDate" placeholder="Enter Or Select End Date" aria-describedby="requiredEndDateMessage" ng-disabled="readOnly" ng-required="true" autocomplete="off" required />
+						<!--{{ event.eventEndDate }} - {{ dateIsValid(event.eventEndDate) }}-->
+<!--					</div>-->
+				</datepicker>
+
+				<p ng-show="!dateIsValid(event.eventEndDate) " class="invalidField">A valid date required in the format d/m/yyyy</p>
+				<p id="requiredEndDateMessage" class="sr-only">This field requires a valid date. The format is d/m/yyyy. Press Tab to move to next field</p>
+			</div>
+
+			<label class="col-md-2" for="eventEndTime">End Time</label>
+			<div class="col-md-4">
+				<input ng-class="{'has-error': !timeIsValid(event.eventEndTime)}" ui-timepicker ui-timepicker="timePickerOptions" id="eventEndTime" size="16" class="form-control" type="text" ng-model="event.eventEndTime" placeholder="Enter Or Select End Time" aria-describedby="requiredEndTimeMessage" ng-readonly="readOnly" ng-required="true" autocomplete="off" required />
+				<!--{{ event.eventEndTime }} - {{ timeIsValid(event.eventEndTime) }}-->
+
+				<p ng-show="!timeIsValid(event.eventEndTime) " class="invalidField">A valid time required in the format h:m AM or PM</p>
+				<p id="requiredEndTimeMessage" class="sr-only">This field requires a valid time. The format is hours column minute followed by AM or PM. Press Tab to move to next field</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="eventLocation">Location</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: eventForm.eventLocation.$valid}" ng-class="{invalidField: !eventForm.eventLocation.$valid}" class="form-control" type="text" id="eventLocation" name="eventLocation" ng-model="event.eventLocation"  placeholder="Enter Event Location" getevent-location='event.eventLocation' ng-disabled="readOnly" ng-required="true" minlength="5" maxlength="150" aria-describedby="requiredLocationMessage">
+
+				<p ng-show="!eventForm.eventLocation.$valid && eventForm.eventLocation.$dirty" class="invalidField">Invalid Entries: Field requires at Leat 5 Characters</p>
+				<p id="requiredLocationMessage" class="sr-only">This is the event location field. It requires a minimum of 5 characters, and a maximun of 150 characters</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="eventGuestList">Guest List</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: !eventForm.eventGuestList.$error.guestAddressList && eventForm.eventGuestList.$dirty}" ng-class="{invalidField: !eventForm.eventGuestList.$valid}" class="form-control" type="textarea" id="eventGuestList" name="eventGuestList" ng-model="event.eventGuestList" placeholder="Enter guest email addresses separated by comma" email-isvalid ng-list ng-valid="!eventForm.eventGuestList.$error.guestAddressList && eventForm.eventGuestList.$dirty" ng-readonly="readOnly"   ng-required="true" aria-describedby="requiredGuestListMessage">
+				<!--email-isvalid ng-list ng-valid="!eventForm.eventGuestList.$error.guestAddressList && eventForm.eventGuestList.$dirty"-->
+				<p ng-show="!eventForm.eventGuestList.$valid && eventForm.eventGuestList.$dirty" class="invalidField">Invalid Entries: Field requires valid email adresses separated by comma ,</p>
+				<p id="requiredGuestListMessage" class="sr-only">This is the event guests list field. It requires a minimum of one email address. Email addresses are sepearated by column</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="eventNotesChecked">Special Notes?</label>
+			<div class="col-md-2">
+				<input type="checkbox" id="eventNotesChecked" ng-model="event.eventNotesCheck" ng-disabled="readOnly"/>
+			</div>
+				<label ng-show="event.eventNotesCheck" class="col-md-2" for="eventNotes">Notes</label>
+				<div ng-show="event.eventNotesCheck" class="col-md-6" >
+					<input ng-class="{validField: eventForm.eventNotes.$valid}" class="form-control" type="textarea" wrap="hard" id="eventNotes" name="eventNotes" ng-model="event.eventNotes" placeholder="Enter special notes here" ng-readonly="readOnly">
+				</div>
+		</div>
+
+		<hr>
+		<div>
+			<button ng-disabled="!eventForm.eventName.$valid ||
+				!eventForm.eventType.$valid ||
+				!eventForm.eventHost.$valid ||
+				!dateIsValid(event.eventStartDate) ||
+				!dateIsValid(event.eventEndDate) ||
+				!timeIsValid(event.eventStartTime) ||
+				!timeIsValid(event.eventEndTime) ||
+				!eventForm.eventLocation.$valid ||
+				!eventForm.eventGuestList.$valid" class="btn btn-primary btn-sm event-button" type="submit" ng-click="createNewEvent(event, eventForm, $event)" ng-if="!readOnly && !isEditing" aria-describedby="createEventButton">
+				Save New Event
+			</button>
+			<p id="createEventButton" class="sr-only">Create Event Button</p>
+
+			<button id="editButton" class="btn btn-primary btn-sm event-button" type="submit" ng-click="editEvent(eventEditedForm, $event)" ng-if="readOnly" aria-describedby="editEventButton">Edit Event</button>
+			<p id="createEventButton" class="sr-only">Create Event Button</p>
+
+			<button class="btn btn-primary btn-sm event-button delete-event-btn" type="submit" ng-click="deleteEvent(event)" ng-if="readOnly" aria-describedby="deleteEventButton">Delete Event</button>
+			<p id="deleteEventButton" class="sr-only">Delete Event Button</p>
+
+			<button class="btn btn-primary btn-sm event-button" type="submit" ng-click="clearEventForm()" ng-if="readOnly || isEditing" aria-describedby="newEventButton">New Event</button>
+			<p id="newEventButton" class="sr-only">New Event Button</p>
+		</div>
+	</form>
+
+	<!--         ******************* EDITING FORM ************************-->
+
+	<form ng-show="isEditing" class="form-horizontal" novalidate role="form" name="eventEditedForm" id="eventEditedForm">
+		<div class="form-group">
+			<label class="col-md-2" for="editedEventName">Event Name</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: eventEditedForm.editedEventName.$valid}" ng-class="{invalidField: !eventEditedForm.editedEventName.$valid}" class="form-control" type="text" id="editedEventName" name="editedEventName" ng-model="editedEvent.eventName" placeholder="Event Name" aria-describedby="requiredEditNameMessage" ng-readonly="readOnly" ng-required="true" minlength="3" maxlength="50" autofocus="true">
+
+				<p ng-show="!eventEditedForm.editedEventName.$valid && eventEditedForm.editedEventName.$touched" class="invalidField">Invalid Entries: Field requires at Least 3 Characters</p>
+				<p id="requiredEditNameMessage" class="sr-only">This is the event name field. It requires a minimum of 3 characters and a maximum of 50 characters</p>
+				<!--<p ng-show="!eventEditedForm.editedEventName.$valid && eventEditedForm.editedEventName.$touched" class="invalidField">Invalid Entries: requires at least 3 characters</p>-->
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="typeOfEvent">Event Type</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: eventEditedForm.editedEventType.$valid}" ng-class="{invalidField: !eventEditedForm.editedEventType.$valid}" ng-model="editedEvent.eventType" list="eventType" id="typeOfEvent" name="editedEventType" placeholder="Type or select event type" class="form-control" aria-describedby="requiredEditTypeMessage" ng-required="true" ng-readonly="readOnly" type="text" minlength="3" maxlength="50"/>
+				<datalist id="eventType">
+					<option value="Meeting">
+					<option value="Conference">
+					<option value="Photo Shoot">
+					<option value="Webinar">
+					<option value="Modeling">
+					<option value="Party">
+					<option value="Picnic">
+					<option value="Fashion Show">
+					<option value="Sport Event">
+				</datalist>
+
+				<p ng-show="!eventEditedForm.editedEventType.$valid && eventEditedForm.editedEventType.$touched">Invalid Entries: Field requires at Least 3 Characters</p>
+				<p id="requiredEditTypeMessage" class="sr-only">This is the event type field. It requires a minimum of 3 characters and a maximum of 50 characters</p>
+				<!--<p ng-show="!eventEditedForm.editedEventType.$valid && eventEditedForm.editedEventType.$touched" class="invalidField">Invalid Entries: Field requires at least 3 characters</p>-->
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="editedEventHost">Event Host</label>
+			<div class="col-md-10">
+				<input ng-class="{validField: eventEditedForm.editedEventHost.$valid}" ng-class="{invalidField: !eventEditedForm.editedEventHost.$valid}" class="form-control" type="text" id="editedEventHost" name="editedEventHost" ng-model="editedEvent.eventHost" placeholder="Event Host" aria-describedby="requiredEditHostMessage" ng-readonly="readOnly" ng-required="true" minlength="5" maxlength="100">
+
+				<p ng-show="!eventEditedForm.editedEventHost.$valid && eventEditedForm.editedEventHost.$touched" class="invalidField">Invalid Entries: Field requires at Leat 5 Characters</p>
+				<p id="requiredEditHostMessage" class="sr-only">This is the event host field. It requires a minimum of 5 characters and a maximum of 150 characters</p>
+				<!--<p ng-show="!eventEditedForm.editedEventHost.$valid && eventEditedForm.editedEventHost.$touched"  class="invalidField">Invalid Entries: Field requires at least 3 characters</p>-->
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2" for="editedEventStartDate">Start Date</label>
+			<div class="col-md-4" >
+				<datepicker date-format="M/d/yyyy" selector="form-control">
+						<input id="editedEventStartDate" size="16" class="date start form-control" type="text" ng-model="editedEvent.eventStartDate" placeholder="Select a start date" aria-describedby="requiredEditStartDateMessage" autocomplete="off" required />
+				</datepicker>
+
+				<p ng-show="!dateIsValid(editedEvent.eventStartDate) " class="invalidField">A valid date required in the format d/m/yyyy</p>
+				<p id="requiredEditStartDateMessage" class="sr-only">This field requires a valid date. The format is d/m/yyyy. Press Tab to move to next field</p>
+			</div>
+			<label class="col-md-2" for="editedEventStartTime">Start Time</label>
+			<div class="col-md-4" >
+				<input ui-timepicker ui-timepicker="timePickerOptions" id="editedEventStartTime" size="16" class="form-control" type="text" ng-model="editedEvent.eventStartTime" placeholder="Select a start time" aria-describedby="requiredEditStartTimeMessage" autocomplete="off" required />
+<!--				{{ editedEvent.eventStartTime | date: 'shortTime'}} - {{ timeIsValid(editedEvent.eventStartTime) }}-->
+
+				<p ng-show="!timeIsValid(editedEvent.eventStartTime) " class="invalidField">A valid time required in the format h:m AM or PM</p>
+				<p id="requiredEditStartTimeMessage" class="sr-only">This field requires a valid time. The format is hours column minute followed by AM or PM. Press Tab to move to next field</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-2" for="editedEventEndDate">End Date</label>
+			<div class="col-md-4">
+				<datepicker date-format="M/d/yyyy" selector="form-control">
+						<input id="editedEventEndDate" size="16" class="date end form-control" type="text" ng-model="editedEvent.eventEndDate" placeholder="Select an end date" aria-describedby="requiredEditEndDatetimeMessage" autocomplete="off" required />
+						<!--{{ editedEvent.eventEndDate }} - {{ dateIsValid(editedEvent.eventEndDate) }}-->
+				</datepicker>
+
+				<p ng-show="!dateIsValid(editedEvent.eventEndDate) " class="invalidField">A valid date required in the format d/m/yyyy</p>
+				<p id="requiredEditEndDatetimeMessage" class="sr-only">This field requires a valid date. The format is d/m/yyyy. Press Tab to move to next field</p>
+			</div>
+			<label class="col-md-2" for="editedEventEndTime">End Time</label>
+			<div class="col-md-4">
+				<input ui-timepicker ui-timepicker="timePickerOptions" id="editedEventEndTime" size="16" class="form-control" type="text" ng-model="editedEvent.eventEndTime" placeholder="Select an end time" aria-describedby="requiredEditEndTimeimeMessage" autocomplete="off" required />
+<!--				{{ editedEvent.eventEndTime | date: 'shortTime'}} - {{ timeIsValid(editedEvent.eventEndTime) }}-->
+				<p ng-show="!timeIsValid(editedEvent.eventEndTime) " class="invalidField">A valid time required in the format h:m AM or PM</p>
+				<p id="requiredEditEndTimeimeMessage" class="sr-only">This field requires a valid time. The format is hours column minute followed by AM or PM. Press Tab to move to next field</p>
+			</div>
+		</div>
+
+			<div class="form-group">
+				<label class="col-md-2" for="editedEventLocation">Location</label>
+				<div class="col-md-10">
+					<input ng-class="{validField: eventEditedForm.editedEventLocation.$valid}" ng-class="{invalidField: !eventEditedForm.editedEventLocation.$valid}" class="form-control" type="text" id="editedEventLocation" name="editedEventLocation" ng-model="editedEvent.eventLocation"  placeholder="Event Location" getevent-location aria-describedby="requiredEditLocationMessage" ng-disabled="readOnly" ng-required="true" minlength="5" maxlength="150">
+
+					<p ng-show="!eventEditedForm.editedEventLocation.$valid && eventEditedForm.editedEventLocation.$touched" class="invalidField">Invalid Entries: Field requires at leat 5 characters</p>
+					<p id="requiredEditLocationMessage" class="sr-only">This is the event location field. It requires a minimum of 5 characters, and a maximun of 150 characters</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2" for="editedEventGuestList">Guest List</label>
+				<div class="col-md-10">
+					<input ng-class="{validField: eventEditedForm.editedEventGuestList.$valid}" ng-class="{invalidField: !eventEditedForm.editedEventGuestList.$valid}" class="form-control" type="textarea" wrap="hard" id="editedEventGuestList" name="editedEventGuestList" ng-model="editedEvent.eventGuestList" ng-list placeholder="Enter guest email addresses separated by comma" aria-describedby="requiredEditGuestListMessage" ng-readonly="readOnly" email-isvalid  ng-required="true">
+					
+					<p ng-show="eventEditedForm.editedEventGuestList.$error.guestAddressList" class="invalidField">Invalid Entries: requires valid email adresses separated by comma</p>
+					<p id="requiredEditGuestListMessage" class="sr-only">This is the event guests list field. It requires a minimum of one email address. Email addresses are sepearated by column</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2" for="editedEventNotesChecked">Special Notes?</label>
+				<div class="col-md-2">
+					<input type="checkbox" id="editedEventNotesChecked" ng-model="editedEvent.eventNotesCheck" ng-disabled="readOnly"/>
+				</div>
+				<div ng-show="editedEvent.eventNotesCheck">
+					<label class="col-md-2" for="editedEventNotes">Special Notes</label>
+					<div class="col-md-6" >
+						<input ng-class="{validField: eventEditedForm.editedEventNotes.$valid}" class="form-control" type="textarea" wrap="hard" id="editedEventNotes" name="editedEventNotes" ng-model="editedEvent.eventNotes" placeholder="Enter special notes here" ng-readonly="readOnly">
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div>				
+				<button ng-disabled="
+					!eventEditedForm.editedEventName.$valid ||
+					!eventEditedForm.editedEventType.$valid ||
+					!eventEditedForm.editedEventLocation.$valid ||
+					!eventEditedForm.editedEventHost.$valid ||
+					
+					!dateIsValid(editedEvent.eventStartDate) ||
+					!dateIsValid(editedEvent.eventEndDate) ||
+					!timeIsValid(editedEvent.eventStartTime) ||
+					!timeIsValid(editedEvent.eventEndTime) ||
+
+					!eventEditedForm.editedEventGuestList.$valid ||
+					eventEditedForm.$pristine"
+
+				class="btn btn-primary event-button"
+				type="submit" ng-click="saveEditedEvent(editedEvent)"
+				ng-if="isEditing" aria-describedby="saveEditedEventButton">
+				Save Changes</button>
+				<p id="saveEditedEventButton" class="sr-only">Save Event Changes Button</p>
+
+				<button class="btn btn-primary event-button" type="submit" ng-click="cancelEditing($event)" ng-if="isEditing" aria-describedby="cancelEditEventButton">Cancel Editing</button>
+				<p id="newEventButton" class="sr-only">Cancel Event Editing Button</p>
+	<!--            <button class="btn btn-primary" ng-click="test()">Test</button>-->
+			</div>
+		</form>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI1qaVQGGosTf7MBy245eXYqVjQJFYeSo&libraries=places&callback=initAutocomplete" async defer></script>
+<script>
+	$(document).ready(function () {
+		document.getElementById('eventName').focus ();
+	});
+</script>
+

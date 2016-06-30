@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" ng-app="eventApp">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>Event Registration</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+		
+		<!--<link rel="stylesheet" href="css/jquery-timepicker.css">
+		<link rel="stylesheet" href="css/angular-datepicker.css">
+	   	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
+		<link rel="stylesheet" href="css/main.css">-->
+
+		<link rel="stylesheet" href="css/all.css">
+		
+	</head>
+	<body ng-controller="AppController as app" class="container-fluid">
+		<div class="container">
+			<div class="row">
+				<title-bar ></title-bar>
+			</div>
+			<div class="row">
+				<div class="container-fluid">
+					<div class="ng-hide" ng-show="!isLoggedIn">
+						<not-loggedin></not-loggedin>
+					</div>
+					<div id="formLabel" ng-show="isLoggedIn">
+						<ng-view></ng-view>
+					</div>
+				</div>
+			</div>
+				<div class="row footer-row">
+					<footer>
+						<ul>
+							<li>Copyright &copy; 2016  - S~Curve ---></li>
+							<li><img ng-src="img/google-plus-icon.png"></li>
+							<li><img ng-src="img/Github-icon.png"></li>
+							<li><img ng-src="img/linkedin-icon.png"></li>
+						</ul>
+					</footer>
+			</div>
+		</div>
+
+		<!-- vendor scripts -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-resource.js"></script>
+		<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+		<script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment-with-locales.min.js"></script>
+
+		<!--<script src="js/geoautocomplete.js"></script>
+		<script src="js/angular-datepicker.js"></script>
+	   	<script src="js/bootstrap-datepicker.js"></script>
+	   	<script src="js/jquery-timepicker.js"></script>
+		<script src="js/timepickerdirective.min.js"></script>
+		<script src="js/eventApp.js"></script>-->
+
+        <script src="all.js"></script>
+
+		<script>
+			$(document).ready(function(){
+					window.onkeydown = function(e) {
+					if (e.keyCode == 8 && e.target == document.body)
+					e.preventDefault();
+				};
+			});
+		</script>
+	</body>
+</html>

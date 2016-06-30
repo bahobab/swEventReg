@@ -1,0 +1,22 @@
+<!--<div class="container">-->
+
+<div class="row" role="allEventDetails">
+<hr>
+    <div class="container flex-view">
+        <div id="AllEvents" class="panel panel-default col-md-4" ng-repeat="event in events">
+            <div class="event-panel-heading">{{ event.eventName }}: {{ event.eventType }}</div>
+            <div class="panel-body">
+<!--                <span>Type: {{ event.eventType }}</span><br>-->
+                <b>On:</b> {{ event.eventStartDate | date: 'D m yyyy'}} {{ event.eventStartTime | date:'shortTime'}}<br />
+                <b>End:</b> {{ event.eventEndDate | date: 'EEE, MMM d, y' }}  {{ event.eventEndTime | date:'shortTime' }}<br />
+                <b>Host:</b> {{ event.eventHost }}<br />
+                <b>At:</b> {{ event.eventLocation }}<br/>
+                <b>Guests:</b> <div class="panel">{{ guestList(event.eventGuestList) }}</div><br>
+                <b ng-if="event.eventNotesCheck">Special Notes:</b> <div>{{ event.eventNotes }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+</div>
+<!--</div>-->

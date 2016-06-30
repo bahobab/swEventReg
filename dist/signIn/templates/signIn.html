@@ -1,0 +1,48 @@
+<!--<h2>This the sign in page</h2>-->
+
+<div class="row">
+    <div class="jumbotron signin-jumbotron" style="height: 350px;">
+        <h4 class="signin-heading">Sign In To Create Your Event</h4>
+
+        <form class="form-signin" role="form" name="singInForm">
+
+            <div class="form-group" ng-class="{ 'has-error' : singInForm.email.$invalid }">
+                <label class="col-md-2" for="email">Email</label>
+                <div class="col-md-10">
+                    <input type="email" id="email" name="email" autocomplete="email" ng-model="user.email" class="form-control" placeholder="Email address" required>
+                    <p class="help-block" ng-show="singInForm.email.$invalid && singInForm.email.$dirty">Enter a valid email</p>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : singInForm.password.$invalid }">
+                <label class="col-md-2" for="password">Password</label>
+                <div class="col-md-10">
+                    <input type="password" id="password" class="form-control" name="password" ng-model="user.password" placeholder="Password" required strong-password>
+<!--                    <dir ng-messages="singInForm.password.$error">-->
+                        <p>
+                            <span ng-show="singInForm.password.$error.lowercaseValidator">at least 1 lowercase character</span>
+                            <span ng-show="singInForm.password.$error.uppercaseValidator">at least 1 uppercase character</span>
+                            <span ng-show="singInForm.password.$error.numberValidator">at least 1 number character</span>
+                            <span ng-show="singInForm.password.$error.specialCharValidator">at least 1 special character</span>
+                            <span ng-show="singInForm.password.$error.lengthValidator">at least 8 characters</span>
+                        </p>
+<!--                    </dir>-->
+                    <p style="color: red" ng-show="regError">{{ regErrorMessage }}</p>
+                </div>
+            </div>
+
+            <hr>
+            <div class="form-group">
+<!--                <input id="autocomplete" class="form=control" ng-show="true" placeholder="address" disabled>-->
+                <div class="col-md-10 col-md-offset-2">
+                    <button type="submit" ng-disabled="!singInForm.email.$valid || !singInForm.password.$valid" class="btn btn-lg btn-primary" ng-click="signIn($event)">Sign In</button>
+<!--                    {{!singInForm.email.$valid || !singInForm.password.$valid}}-->
+                    <label class="checkbox">
+                        <a href="#/register"> Register</a>
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
