@@ -17,7 +17,7 @@ var sourcemaps = require('gulp-sourcemaps');
 	///////// sub-task to kick off browserSync in dev /////////////
 gulp.task('bs', function () {
 	browserSync.init({
-		server: 'dist/'
+		server: 'app/'
 	});
 	browserSync.stream();
 });
