@@ -2,6 +2,7 @@
 
 
 A/ Introduction
+===============
 
 I srtarted this projoject while I was learning AngularJs 1.x
 The tutorial I was using is "Building and Angular App: Eggly" by Lukas Ruebbelke (https://egghead.io/lessons/angularjs-building-an-angular-app-eggly-introduction).
@@ -24,23 +25,30 @@ The app is live and can be used at:
 https://scurve.firebaseapp.com
 
 B/ Usage:
+=========
 
-1) Dev Gulp Tasks:
-- > gulp default
-will kick off browserSync and watches for changes in:
-	index.html and reloads
-	. scripts
-	. styles
+1) Gulp Tasks for Dev - Apply to folder app:
+--------------------------------------------
+run this task to start the browserSync server
+-> gulp default
 
-- > gulp dev
-will concatenate css and js files in the dev environment
+It will also watches for changes in:
+	. index.html, and reloads
+	. scripts files, and concatenate and minify
+	. styles files, and concatenate and minify
 
+run this task to concatenate css and js files manually
+-> gulp dev
 
-2) Deployment Gulp Tasks:
+2) Gulp Tasks for build - apply to folder dist:
+-----------------------------------------------
 Once dev is complete, run this task to deploy app in the dist folder
 - >gulp dist
 
-3) To see a live demo, point your browser to:
+3) Live demo
+------------
+Point your browser to:
+
 	https://scurve.firebaseapp.com
 
 a/ Sign up: Create an account
@@ -52,6 +60,7 @@ Enjoy creating your events
 
 
 C/ References
+=============
 
 - Building and Angular App: Eggly" by Lukas Ruebbelke
 	https://egghead.io/lessons/angularjs-building-an-angular-app-eggly-introduction
