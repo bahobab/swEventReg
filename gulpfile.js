@@ -12,6 +12,9 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
+var gulputil = require('gulp-util');
+var cleanCSS = require('gulp-clean-css');
+
 
 
 	///////// sub-task to kick off browserSync in dev /////////////
@@ -54,6 +57,8 @@ gulp.task('styles', function(){
 		browser: ['last 2 versions']
 	}))
 	.pipe(concat('all.css'))
+	.pipe(cleanCSS({compatibility: 'ie8'}))
+	.on('error', function (err) {console.log(err.message + ' on line ' + err.lineNumber + ' in file : ' + err.fileName)})
 	.pipe(gulp.dest('app/css/'));
 });
 
@@ -75,6 +80,7 @@ gulp.task('dist-styles', function(){
 		browser: ['last 2 versions']
 	}))
 	.pipe(concat('all.css'))
+	.pipe(cleanCSS({compatibility: 'ie8'}))
 	.pipe(gulp.dest('dist/css/'));
 });
 
